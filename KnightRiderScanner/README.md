@@ -1,7 +1,8 @@
 # ESP32 Knight Rider Scanner (NeoPixel)
 
 A KITT-style red "eye" that sweeps back and forth along a NeoPixel strip with a
-fading tail. Speed is adjustable with a potentiometer or from the Serial Monitor.
+fading tail. Control it with a potentiometer, a Wi-Fi web page on your phone,
+or the Serial Monitor.
 
 ## Parts
 - ESP32 dev board
@@ -26,7 +27,22 @@ Grounds must be shared. If the strip flickers, add a 3.3 V → 5 V level shifter
 ## Software
 1. Arduino IDE → Boards Manager → install **esp32** by Espressif.
 2. Library Manager → install **Adafruit NeoPixel**.
-3. Open `KnightRiderScanner.ino`, set `NUM_LEDS` to your strip length, upload.
+3. Open `KnightRiderScanner.ino`, set `NUM_LEDS` to your strip length.
+4. (Optional) put your Wi-Fi name/password in `WIFI_SSID` / `WIFI_PASSWORD`.
+5. Upload, then open the Serial Monitor at 115200 baud to see the web address.
+
+## Wi-Fi web page
+- **Home Wi-Fi set:** the ESP32 joins your network. Open the IP address shown in
+  the Serial Monitor, or `http://knightrider.local`.
+- **Home Wi-Fi blank or not reachable:** the ESP32 makes its own hotspot called
+  **KnightRider** (password `kitt2000`). Join it, then open `http://192.168.4.1`.
+
+The page has:
+- Speed slider (0–100 %)
+- Brightness slider
+- Colour picker for the scanner eye
+- On/Off button
+- A note showing whether the knob or the web page is currently setting the speed
 
 ## Speed control
 - **Potentiometer:** turn clockwise for faster, anticlockwise for slower
@@ -36,9 +52,10 @@ Grounds must be shared. If the strip flickers, add a 3.3 V → 5 V level shifter
   - `+` / `-` – faster / slower by 5 ms
   - `?` – show current speed
 
-  Serial control holds until you move the pot again.
+  Speed set from the web page or serial holds until you move the knob again.
 
 ## Tweaks
-- `EYE_R/G/B` – colour of the eye
+- `eyeR/eyeG/eyeB` – starting colour of the eye
+- `brightness` – starting brightness (0–255)
 - `TAIL_LENGTH` – length of the fading tail
-- `BRIGHTNESS` – overall brightness (0–255)
+- `AP_SSID` / `AP_PASSWORD` / `HOSTNAME` – hotspot name, password and `.local` name
